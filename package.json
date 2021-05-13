@@ -24,6 +24,7 @@
   "author": "Mr Abir Ahamed",
   "license": "ISC",
   "devDependencies": {
+    "@types/sass": "^1.16.0",
     "clean-webpack-plugin": "^3.0.0",
     "copy-webpack-plugin": "^6.0.1",
     "css-loader": "^3.5.3",
@@ -35,7 +36,6 @@
     "html-webpack-tags-plugin": "^2.0.17",
     "javascript-obfuscator": "^0.28.4",
     "mini-css-extract-plugin": "^0.9.0",
-    "node-sass": "^4.14.1",
     "obfuscator-loader": "^1.1.2",
     "sass-loader": "^8.0.2",
     "semver-parser": "^3.0.5",
@@ -61,7 +61,7 @@
     "html-webpack-include-assets-plugin": "^2.0.0",
     "html2canvas": "^1.0.0-rc.5",
     "jquery": "^3.5.1",
-    "web-ext": "^4.2.0",
+    "web-ext": "^6.1.0",
     "webrtc-adapter": "^7.6.1"
   }
 }
