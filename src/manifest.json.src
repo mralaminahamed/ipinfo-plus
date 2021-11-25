@@ -2,8 +2,8 @@
   "manifest_version": 2,
   "name": "IP Info Plus",
   "short_name": "IPInfo Plus",
-  "author": "Mr. Abir Ahamed",
-  "homepage_url": "https://download.mishusoft.com/addons/ipinfoplus/",
+  "author": "Mr. Al-Amin Ahamed",
+  "homepage_url": "https://www.mishusoft.com/browser/extension/ipinfoplus/",
   "version": "1.4.2",
   "default_locale": "en",
   /*#!if browser_specific_settings===true*/

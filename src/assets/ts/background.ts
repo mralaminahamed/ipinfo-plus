@@ -6,7 +6,6 @@
 * */
 
 
-'use strict';
 import {browser} from "webextension-polyfill-ts";
 import {BrowserJS} from "./browserjs";
 import {app, today} from "./db";

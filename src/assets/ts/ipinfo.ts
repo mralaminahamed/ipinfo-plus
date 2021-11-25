@@ -5,8 +5,8 @@
 * Official Link: https://download.mishusoft.com/addons/ipinfoplus/
 * */
 
-'use strict';
 
+// https://pretagteam.com/question/add-a-separate-html-file-into-createreactapp
 
 import {sendRequest} from "./lib-functions-background";
 import {captureElementById, createElement} from "./lib-functions";
@@ -18,6 +18,7 @@ const ipt:any = captureElementById('ip-info-plus-app-data-table');
 
 
 function getIPInfo() {
+    console.log('test')
     ipd.style = 'width:59% !important;';
     ipb.value = 'Getting data..';
     ipl.textContent = 'Loading...';

@@ -1,4 +1,7 @@
+# dependies, runtime and production build directories
 /node_modules/
-/dist-src/
-/dist-firefox-package/
-/dist-firefox/
+/dist-*/
+
+# lock file
+*.lock
+*-lock.json

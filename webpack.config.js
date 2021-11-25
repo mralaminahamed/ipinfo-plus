@@ -2,12 +2,16 @@ const path = require('path');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 const WebExtWebpackPlugin = require('web-ext-webpack-plugin');
 const {CleanWebpackPlugin} = require('clean-webpack-plugin');
-const JavaScriptObfuscator = require('webpack-obfuscator');
+const MiniCssExtractPlugin = require("mini-css-extract-plugin");
+// const CssMinimizerPlugin = require("css-minimizer-webpack-plugin");
+// const JavaScriptObfuscator = require('webpack-obfuscator');
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const HtmlWebpackTagsPlugin = require('html-webpack-tags-plugin');
 const Handlebars = require('handlebars')
+const {HotModuleReplacementPlugin} =  require('webpack');
 /*const MiniCssExtractPlugin = require('mini-css-extract-plugin');*/
 
+// https://github.com/TypeStrong/fork-ts-checker-webpack-plugin
 
 // Look for a --firefox <path> argument
 const firefoxIndex = process.argv.indexOf('--firefox');
@@ -27,17 +31,39 @@ const firefoxProfile =
 const commonConfig = {
     mode: 'production',
     context: path.resolve(__dirname, './src'),
+
+    //dev conf
+    devServer: {
+        static: {
+            directory: path.join(__dirname, '/dist-chrome'),
+        },
+       // http2: true,
+        port: 4000,
+        // open: true,
+        open: ['./ip-info-plus.html'],
+        compress: true,
+        client: {
+            progress: true,
+            reconnect: true,
+        },
+    },
+
     module: {
         rules: [
             {
-                test: /\.(css)$/,
+                // compile sass, scss file
+                test: /\.(sa|sc|c)ss$/i,
                 exclude: /node_modules/,
-                use: ["style-loader", "css-loader"]
-            },
-            {
-                test: /\.(scss|sass)$/,
-                exclude: /node_modules/,
-                use: ["style-loader", "css-loader", "sass-loader"]
+                use: [
+                    // Minify compiled css files.
+                    MiniCssExtractPlugin.loader,
+                    // Translates CSS into CommonJS.
+                    "css-loader",
+                    // postcss Loader.
+                    "postcss-loader",
+                    // Compiles Sass to CSS.
+                    "sass-loader",
+                ],
             },
             {
                 test: /\.(html)$/,
@@ -45,7 +71,7 @@ const commonConfig = {
                 use: [{
                     loader: 'html-loader',
                     options: {
-                        esModule:true,
+                        esModule: true,
                         preprocessor: (content, loaderContext) => {
                             let result;
 
@@ -68,24 +94,24 @@ const commonConfig = {
             {
                 test: /\.(svg|png|jpg|gif)$/,
                 use: {
-                    loader : "file-loader",
-                    options : {
+                    loader: "file-loader",
+                    options: {
                         name: "[name].[contentHash].[ext]",
-                        outputPath:"assets/images/"
+                        outputPath: "assets/images/"
                     }
                 }
             },
         ],
     },
     resolve: {
-        extensions: ['.ts', '.js'],
+        extensions: ['.ts', '.tsx', '.json'],
     },
     plugins: [
         new CleanWebpackPlugin(),
         new HtmlWebpackPlugin({
             chunks: ['ip-info-plus'],
-            minify:true,
-            scriptLoading :'blocking',
+            minify: true,
+            scriptLoading: 'blocking',
             filename: 'ip-info-plus.html',
             template: 'assets/html/template.html',
         }),
@@ -99,13 +125,19 @@ const commonConfig = {
                 {from: './assets/images/', to: './assets/images/[name].[ext]'},
             ]
         }),
+        new MiniCssExtractPlugin({
+            filename: `[name].css`,
+            chunkFilename: `[id].css`,
+        }),
+        // Enable the plugin
+        new HotModuleReplacementPlugin(),
     ],
 }
 
 const commonExtConfig = {
     ...commonConfig,
     entry: {
-        'content': ['./assets/ts/app.ts','./manifest.json.src'],
+        'content': ['./assets/ts/app.ts', './manifest.json.src'],
         'background': './assets/ts/background.ts',
         'ip-info-plus': './assets/ts/ipinfo.ts',
     }
@@ -139,7 +171,7 @@ const firefoxConfig = {
                 ]
             },
             {
-                test: /\.ts$/,
+                test: /\.tsx?$/,
                 use: ['ts-loader', {
                     loader: 'webpack-preprocessor-loader',
                     options: {
@@ -170,9 +202,9 @@ const firefoxConfig = {
                 {from: './assets/sass/app.css*', to: './assets/css/[name].[ext]'}
             ]
         }),
-        new JavaScriptObfuscator({
-            rotateStringArray: true
-        })
+        // new JavaScriptObfuscator({
+        //     rotateStringArray: true
+        // })
     ],
 };
 
@@ -204,7 +236,7 @@ const chromeConfig = {
                 ]
             },
             {
-                test: /\.ts$/,
+                test: /\.tsx?$/,
                 use: ['ts-loader', {
                     loader: 'webpack-preprocessor-loader',
                     options: {
@@ -230,9 +262,9 @@ const chromeConfig = {
                 {from: './assets/sass/app.css*', to: './assets/css/[name].[ext]'}
             ]
         }),
-        new JavaScriptObfuscator({
-            rotateStringArray: true
-        })
+        // new JavaScriptObfuscator({
+        //     rotateStringArray: true
+        // })
     ],
 };
 
@@ -267,7 +299,7 @@ const testConfig = {
                 ]
             },
             {
-                test: /\.ts$/,
+                test: /\.tsx?$/,
                 use: ['ts-loader', {
                     loader: 'webpack-preprocessor-loader',
                     options: {
@@ -296,8 +328,10 @@ const testConfig = {
     ],
 }
 
-module.exports = (env, argv) => {
-    let configs = [testConfig]
+module.exports = (env) => {
+    //console.log(arguments)
+   // let configs = [testConfig]
+    let configs = []
     if (env && env.target === 'chrome') {
         configs.push({...chromeConfig, name: 'extension'})
     } else {

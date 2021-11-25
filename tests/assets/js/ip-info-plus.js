@@ -103,7 +103,7 @@ __webpack_require__.r(__webpack_exports__);
 * Website: https://www.mishusoft.com
 * Official Link: https://download.mishusoft.com/addons/ipinfoplus/
 * */
-
+// https://pretagteam.com/question/add-a-separate-html-file-into-createreactapp
 
 
 const ipd = Object(_lib_functions__WEBPACK_IMPORTED_MODULE_1__["captureElementById"])('ipd-address');
