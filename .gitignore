@@ -1,6 +1,7 @@
 # dependies, runtime and production build directories
 /node_modules/
 /dist-*/
+/tests/
 
 # lock file
 *.lock
