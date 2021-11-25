@@ -3,13 +3,9 @@ const CopyWebpackPlugin = require('copy-webpack-plugin');
 const WebExtWebpackPlugin = require('web-ext-webpack-plugin');
 const {CleanWebpackPlugin} = require('clean-webpack-plugin');
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
-// const CssMinimizerPlugin = require("css-minimizer-webpack-plugin");
-// const JavaScriptObfuscator = require('webpack-obfuscator');
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const HtmlWebpackTagsPlugin = require('html-webpack-tags-plugin');
 const Handlebars = require('handlebars')
-//const {HotModuleReplacementPlugin} =  require('webpack');
-/*const MiniCssExtractPlugin = require('mini-css-extract-plugin');*/
 
 // https://github.com/TypeStrong/fork-ts-checker-webpack-plugin
 
@@ -128,8 +124,6 @@ const commonConfig = {
             filename: `[name][ext]`,
             chunkFilename: `[id][ext]`,
         }),
-        // Enable the plugin
-        //new HotModuleReplacementPlugin(),
     ],
 }
 
@@ -201,9 +195,6 @@ const firefoxConfig = {
                 {from: './assets/sass/app.css*', to: './assets/css/[name][ext]'}
             ]
         }),
-        // new JavaScriptObfuscator({
-        //     rotateStringArray: true
-        // })
     ],
 };
 
@@ -261,9 +252,6 @@ const chromeConfig = {
                 {from: './assets/sass/app.css*', to: './assets/css/[name][ext]'}
             ]
         }),
-        // new JavaScriptObfuscator({
-        //     rotateStringArray: true
-        // })
     ],
 };
 
