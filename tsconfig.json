@@ -1,6 +1,6 @@
 {
   "compilerOptions": {
-    "module": "ESNext",
+    "module": "ES2015",
     "esModuleInterop": true,
     "forceConsistentCasingInFileNames": true,
     "moduleResolution": "node",
@@ -12,7 +12,7 @@
     "sourceMap": true,
     "strictNullChecks": true,
     "resolveJsonModule": true,
-    "target": "ES5",
+    "target": "ES2015",
     "typeRoots": [
       "node_modules/@types",
       "node_modules/web-ext-types"
@@ -21,7 +21,7 @@
       "ESNext",
       "DOM"
     ],
-    "jsx": "react"
+    "jsx": "react-jsx"
   },
   "include": [
     "./src/assets/ts/*"

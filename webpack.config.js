@@ -14,8 +14,10 @@ const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const HtmlWebpackTagsPlugin = require('html-webpack-tags-plugin');
 const Handlebars = require('handlebars')
+const webpack =  require('webpack');
 
 // https://github.com/TypeStrong/fork-ts-checker-webpack-plugin
+// https://juejin.cn/post/7031821096898953223
 
 // Look for a --firefox <path> argument
 const firefoxIndex = process.argv.indexOf('--firefox');
@@ -107,6 +109,11 @@ const commonConfig = {
         ],
     },
     resolve: {
+        alias: {
+            src: path.resolve(__dirname, "src"),
+            utils: path.resolve(__dirname, "src/common/utils/"),
+            components: path.resolve(__dirname, "src/components"),
+        },
         extensions: ['.ts', '.tsx', '.json'],
     },
     plugins: [
@@ -132,16 +139,18 @@ const commonConfig = {
             filename: `[name][ext]`,
             chunkFilename: `[id][ext]`,
         }),
+        new webpack.ProgressPlugin(),
     ],
 }
 
 const commonExtConfig = {
     ...commonConfig,
-    entry: {
-        'content': ['./assets/ts/app.ts', './manifest.json.src'],
-        'background': './assets/ts/background.ts',
-        'ip-info-plus': './assets/ts/ipinfo.tsx',
-    }
+    entry :'./assets/ts/ipinfo.tsx'
+    // entry: {
+    //     // 'content': ['./assets/ts/app.ts', './manifest.json.src'],
+    //     // 'background': './assets/ts/background.ts',
+    //     'ip-info-plus': './assets/ts/ipinfo.tsx',
+    // }
 };
 
 const firefoxConfig = {
