@@ -7,3 +7,6 @@
 # lock file
 *.lock
 *-lock.json
+
+# other files
+.log
