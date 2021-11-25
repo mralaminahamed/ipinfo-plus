@@ -8,7 +8,7 @@ const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const HtmlWebpackTagsPlugin = require('html-webpack-tags-plugin');
 const Handlebars = require('handlebars')
-const {HotModuleReplacementPlugin} =  require('webpack');
+//const {HotModuleReplacementPlugin} =  require('webpack');
 /*const MiniCssExtractPlugin = require('mini-css-extract-plugin');*/
 
 // https://github.com/TypeStrong/fork-ts-checker-webpack-plugin
@@ -34,13 +34,12 @@ const commonConfig = {
 
     //dev conf
     devServer: {
-        static: {
+         static: {
             directory: path.join(__dirname, '/dist-chrome'),
-        },
-       // http2: true,
+         },
         port: 4000,
-        // open: true,
         open: ['./ip-info-plus.html'],
+        watchFiles: ['src/**/*'],
         compress: true,
         client: {
             progress: true,
@@ -122,15 +121,15 @@ const commonConfig = {
         new CopyWebpackPlugin({
             patterns: [
                 {from: './_locales/', to: './_locales/'},
-                {from: './assets/images/', to: './assets/images/[name].[ext]'},
+                {from: './assets/images/', to: './assets/images/[name][ext]'},
             ]
         }),
         new MiniCssExtractPlugin({
-            filename: `[name].css`,
-            chunkFilename: `[id].css`,
+            filename: `[name][ext]`,
+            chunkFilename: `[id][ext]`,
         }),
         // Enable the plugin
-        new HotModuleReplacementPlugin(),
+        //new HotModuleReplacementPlugin(),
     ],
 }
 
@@ -199,7 +198,7 @@ const firefoxConfig = {
         }),
         new CopyWebpackPlugin({
             patterns: [
-                {from: './assets/sass/app.css*', to: './assets/css/[name].[ext]'}
+                {from: './assets/sass/app.css*', to: './assets/css/[name][ext]'}
             ]
         }),
         // new JavaScriptObfuscator({
@@ -259,7 +258,7 @@ const chromeConfig = {
         ...commonExtConfig.plugins,
         new CopyWebpackPlugin({
             patterns: [
-                {from: './assets/sass/app.css*', to: './assets/css/[name].[ext]'}
+                {from: './assets/sass/app.css*', to: './assets/css/[name][ext]'}
             ]
         }),
         // new JavaScriptObfuscator({
@@ -330,7 +329,7 @@ const testConfig = {
 
 module.exports = (env) => {
     //console.log(arguments)
-   // let configs = [testConfig]
+    // let configs = [testConfig]
     let configs = []
     if (env && env.target === 'chrome') {
         configs.push({...chromeConfig, name: 'extension'})
