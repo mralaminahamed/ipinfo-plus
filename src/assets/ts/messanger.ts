@@ -1,3 +1,12 @@
+/**
+ * IP Info Plus
+ * Developer: Al-Amin Ahamed
+ * Website: https://www.mishusoft.com
+ * Home: https://mishusoft.com/brower/addons/ipinfoplus/
+ * license : GPL-3.0-only
+ * */
+
+
 /*communication channel*/
 // @ts-ignore
 export let acsComPortFront = browser.runtime.connect({name: 'acs-messaging-port'});

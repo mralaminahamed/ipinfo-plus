@@ -2,6 +2,31 @@
   "name": "ipinfo-plus",
   "version": "1.4.2",
   "description": "It uses a database of IP addresses, provided from ipdata.co, that are associated to cities, countries and to other information.",
+  "homepage": "https://mishusoft.com/brower/addons/ipinfoplus/",
+  "bugs": {
+    "url": "https://github.com/mralaminahamed/ipinfo-plus/issues",
+    "email": "alamin@mishusoft.com"
+  },
+  "author": {
+    "name": "Al-Amin Ahamed",
+    "email": "alamin@mishusoft.com",
+    "url": "https://github.com/mralaminahamed/"
+  },
+  "funding": {
+    "type": "opencollective",
+    "url": "https://opencollective.com/al-amin-ahamed"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/mralaminahamed/ipinfo-plus.git"
+  },
+  "keywords": [
+    "ip",
+    "ip info",
+    "ip lookup",
+    "ipdata"
+  ],
+  "license": "GPL-3.0-only",
   "scripts": {
     "start": "webpack-dev-server --mode development --env target=chrome",
     "start:ext": "web-ext run",
@@ -17,14 +42,6 @@
     "upgrade:packages": "npx npm-check-updates -u --timeout 100000",
     "zip-src": "node ./src/utils/zip-src"
   },
-  "keywords": [
-    "ip",
-    "ip info",
-    "ip lookup",
-    "ipdata"
-  ],
-  "author": "Mr Abir Ahamed",
-  "license": "ISC",
   "devDependencies": {
     "@types/sass": "^1.43.0",
     "@webpack-cli/info": "^1.4.0",

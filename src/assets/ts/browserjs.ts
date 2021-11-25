@@ -1,9 +1,11 @@
 /**
- * BrowserJS Library
- * Developer: Mr Abir Ahamed
- * Website: https://www.mishusoft.com
- * Official Link: https://lib.mishusoft.com/browser/browserjs.js
- * */
+* BrowserJS Library
+* Developer: Al-Amin Ahamed
+* Website: https://www.mishusoft.com
+* Home: https://mishusoft.com/brower/addons/ipinfoplus/
+* license : GPL-3.0-only
+* */
+
 export class BrowserJS {
     public BrowserName:any;
     public BrowserNameFull:any

@@ -1,3 +1,11 @@
+/**
+ * IP Info Plus
+ * Developer: Al-Amin Ahamed
+ * Website: https://www.mishusoft.com
+ * Home: https://mishusoft.com/brower/addons/ipinfoplus/
+ * license : GPL-3.0-only
+ * */
+
 const path = require('path');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 const WebExtWebpackPlugin = require('web-ext-webpack-plugin');

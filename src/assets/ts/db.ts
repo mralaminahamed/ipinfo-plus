@@ -1,9 +1,11 @@
-/*
-* IP Info Plus
-* Developer: Mr Abir Ahamed
-* Website: https://www.mishusoft.com
-* Official Link: https://download.mishusoft.com/addons/ipinfoplus/
-* */
+/**
+ * IP Info Plus
+ * Developer: Al-Amin Ahamed
+ * Website: https://www.mishusoft.com
+ * Home: https://mishusoft.com/brower/addons/ipinfoplus/
+ * license : GPL-3.0-only
+ * */
+
 
 export const today = new Date();
 
