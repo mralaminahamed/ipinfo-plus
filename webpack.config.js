@@ -140,7 +140,7 @@ const commonExtConfig = {
     entry: {
         'content': ['./assets/ts/app.ts', './manifest.json.src'],
         'background': './assets/ts/background.ts',
-        'ip-info-plus': './assets/ts/ipinfo.ts',
+        'ip-info-plus': './assets/ts/ipinfo.tsx',
     }
 };
 

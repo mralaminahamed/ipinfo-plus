@@ -20,7 +20,8 @@
     "lib": [
       "ESNext",
       "DOM"
-    ]
+    ],
+    "jsx": "react"
   },
   "include": [
     "./src/assets/ts/*"
