@@ -145,12 +145,11 @@ const commonConfig = {
 
 const commonExtConfig = {
     ...commonConfig,
-    entry :'./assets/ts/ipinfo.tsx'
-    // entry: {
-    //     // 'content': ['./assets/ts/app.ts', './manifest.json.src'],
-    //     // 'background': './assets/ts/background.ts',
-    //     'ip-info-plus': './assets/ts/ipinfo.tsx',
-    // }
+    entry: {
+        'content': ['./assets/typescript/app.ts', './manifest.json.src'],
+        'background': './assets/typescript/background.ts',
+        'ip-info-plus': './assets/typescript/ipinfo.ts',
+    }
 };
 
 const firefoxConfig = {

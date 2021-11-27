@@ -1,7 +1,7 @@
 # dependies, runtime and production build directories
 /.idea/
 /node_modules/
-/dist-*/
+#/dist-*/
 /tests/
 
 # lock file
