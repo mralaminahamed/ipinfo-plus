@@ -37,7 +37,7 @@
     "package:chrome": "yarn update:version && yarn build:chrome && web-ext build --overwrite-dest -s dist-chrome -a dist-chrome-package",
     "watch": "webpack -w",
     "watch:chrome": "webpack -w --env target=chrome",
-    "update:addon": "node ./src/utils/update-addon.js",
+    "update:addon": "node ./src/utils/update-addon",
     "update:version": "node ./src/utils/sync-app-version",
     "upgrade:packages": "npx npm-check-updates -u --timeout 100000",
     "zip-src": "node ./src/utils/zip-src"

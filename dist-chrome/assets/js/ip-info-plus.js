@@ -1,0 +1,1 @@
+document.addEventListener("load",(function(o){console.log(o)})),console.log("page ready");
