@@ -53,6 +53,10 @@ const commonConfig = {
         },
     },
 
+    stats : {
+      errorDetails : true,
+    },
+
     module: {
         rules: [
             {

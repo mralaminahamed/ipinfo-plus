@@ -5,3 +5,9 @@
  * Home: https://mishusoft.com/browser/addons/ipinfoplus/
  * license : GPL-3.0-only
  * */
+
+document.addEventListener('load',function (e) {
+    console.log(e)
+})
+
+console.log('page ready')
