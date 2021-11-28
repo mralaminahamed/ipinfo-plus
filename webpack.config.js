@@ -42,6 +42,7 @@ const commonConfig = {
     devServer: {
          static: {
             directory: path.join(__dirname, '/dist-chrome'),
+            publicPath: ''
          },
         port: 4000,
         open: ['./ip-info-plus.html'],

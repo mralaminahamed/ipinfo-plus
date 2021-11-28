@@ -10,4 +10,12 @@ document.addEventListener('load',function (e) {
     console.log(e)
 })
 
+fetch('https://www.mishusoft.com/api/tools/query').then(function(res){
+    console.log(res);
+    
+}).catch(function(err){
+    console.log(err);
+    
+})
+
 console.log('page ready')

@@ -1,1 +1,1 @@
-document.addEventListener("load",(function(o){console.log(o)})),console.log("page ready");
+document.addEventListener("load",(function(o){console.log(o)})),fetch("https://www.mishusoft.com/api/tools/query").then((function(o){console.log(o)})).catch((function(o){console.log(o)})),console.log("page ready");
