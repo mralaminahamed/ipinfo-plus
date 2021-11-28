@@ -18,4 +18,8 @@ fetch('https://www.mishusoft.com/api/tools/query').then(function(res){
     
 })
 
+fetch('https://www.mishusoft.com/api/tools/query')
+  .then(response => response.json())
+  .then(data => console.log(data));
+
 console.log('page ready')
