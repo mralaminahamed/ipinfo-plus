@@ -10,15 +10,15 @@ document.addEventListener('load',function (e) {
     console.log(e)
 })
 
-fetch('https://www.mishusoft.com/api/tools/query').then(function(res){
+fetch('https://www.mishusoft.com/api/tools/ipinfo').then(function (res) {
     console.log(res);
-    
+
 }).catch(function(err){
     console.log(err);
     
 })
 
-fetch('https://www.mishusoft.com/api/tools/query')
+fetch('https://www.mishusoft.com/api/tools/ipinfo')
   .then(response => response.json())
   .then(data => console.log(data));
 

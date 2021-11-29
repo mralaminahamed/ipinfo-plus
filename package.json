@@ -2,7 +2,7 @@
   "name": "ipinfo-plus",
   "version": "1.4.2",
   "description": "It uses a database of IP addresses, provided from ipdata.co, that are associated to cities, countries and to other information.",
-  "homepage": "https://mishusoft.com/browser/addons/ipinfoplus/",
+  "homepage": "https://mishusoft.com/products/browser/addons/ipinfoplus/",
   "bugs": {
     "url": "https://github.com/mralaminahamed/ipinfo-plus/issues",
     "email": "alamin@mishusoft.com"
