@@ -44,30 +44,30 @@
   },
   "devDependencies": {
     "@types/sass": "^1.43.1",
-    "@webpack-cli/info": "^1.4.1",
-    "@webpack-cli/serve": "^1.6.1",
+    "@webpack-cli/info": "^1.5.0",
+    "@webpack-cli/serve": "^1.7.0",
     "clean-webpack-plugin": "^4.0.0",
     "copy-webpack-plugin": "^11.0.0",
     "css-loader": "^6.7.1",
     "events": "^3.3.0",
     "file-loader": "^6.2.0",
     "handlebars": "^4.7.7",
-    "html-loader": "^3.1.0",
+    "html-loader": "^4.1.0",
     "html-webpack-plugin": "^5.5.0",
     "html-webpack-tags-plugin": "^3.0.2",
-    "mini-css-extract-plugin": "^2.6.0",
-    "sass-loader": "^13.0.0",
+    "mini-css-extract-plugin": "^2.6.1",
+    "sass-loader": "^13.0.2",
     "semver-parser": "^4.0.1",
     "style-loader": "^3.3.1",
-    "ts-loader": "^9.3.0",
-    "typescript": "^4.7.3",
+    "ts-loader": "^9.3.1",
+    "typescript": "^4.7.4",
     "unused-files-webpack-plugin": "^3.4.0",
     "web-ext-types": "^3.2.1",
     "web-ext-webpack-plugin": "github:hiikezoe/web-ext-webpack-plugin",
     "webextension-polyfill-ts": "^0.16.0",
     "webpack": "^5.73.0",
-    "webpack-cli": "^4.9.2",
-    "webpack-dev-server": "^4.9.1",
+    "webpack-cli": "^4.10.0",
+    "webpack-dev-server": "^4.9.3",
     "webpack-obfuscator": "^3.5.1",
     "webpack-preprocessor": "^0.1.12",
     "webpack-preprocessor-loader": "^1.2.0"
@@ -77,7 +77,7 @@
   },
   "dependencies": {
     "archiver": "^5.3.1",
-    "web-ext": "^6.8.0"
+    "web-ext": "^7.1.1"
   },
   "packageManager": "yarn@4.0.0-rc.6"
 }
